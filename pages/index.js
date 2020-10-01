@@ -1,28 +1,38 @@
+import Layout from './components/layout';
 
-const Index = (props) => {
-    return (
-        <div>
-            hello world
-
-            <h1>{props.message}</h1>
-        </div>
-    )
-}
-
-export async function getStaticProps() {
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
-    const res = await fetch('http://localhost:3000/api/')
-    const json = await res.json()
-  
-    // By returning { props: posts }, the Blog component
-    // will receive `posts` as a prop at build time
-    return {
-      props: {
-        message: json.message
-      }
+class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fetchData = this.fetchData.bind(this);
+    this.state = {
+      message: ''
     }
- }
-  
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  async fetchData() {
+    const response = await fetch('/api/');
+    const json = await response.json();
+
+    this.setState({
+      message: json.message
+    })
+  }
+
+  render() {
+    return (
+      <Layout>
+        <div className="p-2">
+          Hello World
+          <br />
+          <h1>{this.state.message}</h1>
+        </div>
+      </Layout>
+    );
+  }
+}
 
 export default Index;
