@@ -1,4 +1,4 @@
-import Layout from './components/layout';
+import Layout from '../components/layout';
 
 class Index extends React.Component {
   constructor(props) {
